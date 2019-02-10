@@ -3,21 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 
-
+// NOTES
+// React component subclasses are going to be used as a
+// DOM tag: <Square />, for example. Like when we use
+// HTML DOM tags as <a href="URL">Mylink</a>
+// In this case, 'href' is the parameter we pass to 'a'
+// In a react component, we pass the parameters the same way,
+// and we access them as an argument in the object called props
+// for example: this.props.href
 class Square extends React.Component {
-  render() {
+  render() {    // When this component is 'rendered', it returns a 'description' of what it's shown
+                // The sintax used here is called JSX, and it will be built with Babel, and translated to code.
     return (
       <button className="square">
-        {/* TODO */}
+        {this.props.value} 
       </button>
-    );
+    );            // The output of this function, is a React element or a 'description'
   }
 }
 
 class Board extends React.Component {
   renderSquare(i) {
-    return <Square />;
-  }
+    return <Square value={i}/>;     // Uses a React component defined before,
+  }                                 // with argument value = the value of i
 
   render() {
     const status = 'Next player: X';
