@@ -12,39 +12,32 @@ import './index.css';
 // and we access them as an argument in the object called props
 // for example: this.props.href
 
+// render() --> output a 'description'
+// When a component is 'rendered', it returns a 'description' of what it's shown
+// The sintax used here is called JSX, and it will be built with Babel, and translated to code.
+
 // In order to "remember things", React Components use the 'this.state'
 // as a private parameter. A constructor is used to initialize this argument
-class Square extends React.Component {
-  constructor(props) {
-      super(props);   // Needs to be called
-      this.state = {
-        value: null,  // Value of the square
-      };
-  }
 
-  // Button element, on click, it updates the state of the React component 'square'
-  // NOTE: in 'onClick', arrow syntax for defining a function is used (to be able to access
-  // the object as 'this')
-  render() {    // When this component is 'rendered', it returns a 'description' of what it's shown
-                // The sintax used here is called JSX, and it will be built with Babel, and translated to code.
-    return (
-      <button
-        className="square"
-        onClick ={
-          () =>  this.props.onClick()
-        }
-      >
-        {this.state.value}
-      </button>
-    );            // The output of this function, is a React element or a 'description'
-  }
+// ------------------------------------------- //
+
+// Square is now written as a function component, as the component only had a render method
+// Note: props.onClick is a function -- notice the lack of parenthesis
+function Square(props){
+  return(
+    <button className="square" onClick ={props.onClick}>
+      {props.value}
+    </button>
+  );
 }
 
+// NOTE: in 'onClick', arrow syntax for defining a function is used (to be able to access
+// the object as 'this')
 class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null),   // We will store the state of the game in board and not in each
+      squares: Array(9).fill(null)    // We will store the state of the game in board and not in each
                                       // square. Information will flow from children to parent through props
     };
   }
