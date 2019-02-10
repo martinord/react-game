@@ -31,7 +31,7 @@ class Square extends React.Component {
       <button
         className="square"
         onClick ={
-          () =>  this.setState({value: 'X'})
+          () =>  this.props.onClick()
         }
       >
         {this.state.value}
@@ -41,10 +41,33 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
-  renderSquare(i) {
-    return <Square value={i}/>;     // Uses a React component defined before,
-  }                                 // with argument value = the value of i
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),   // We will store the state of the game in board and not in each
+                                      // square. Information will flow from children to parent through props
+    };
+  }
 
+  handleClick(i) {
+    const squares = this.state.squares.slice();   // Make a copy of the squares array, to implement inmutability of them
+                                                  // element we want to change. Then, replace the element with the modified copy
+                                                  // This will create a pure React element, helping to know when to re-render.
+    squares[i] = 'X';
+    this.setState({squares: squares});
+  }
+
+  renderSquare(i) {
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+      />
+    )    // 'value' and 'onClick' properties are passed to the Square element
+         // It is accessed the current state of the board. The 'onClick' property will give
+         // each sqare a function that can call to update the board without need to access the
+        // private argument 'state'
+  }
   render() {
     const status = 'Next player: X';
 
