@@ -37,8 +37,8 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null)    // We will store the state of the game in board and not in each
-                                      // square. Information will flow from children to parent through props
+      squares: Array(9).fill(null),    // We will store the state of the game in board and not in each
+      xIsNext: true,                   // square. Information will flow from children to parent through props
     };
   }
 
@@ -46,8 +46,11 @@ class Board extends React.Component {
     const squares = this.state.squares.slice();   // Make a copy of the squares array, to implement inmutability of them
                                                   // element we want to change. Then, replace the element with the modified copy
                                                   // This will create a pure React element, helping to know when to re-render.
-    squares[i] = 'X';
-    this.setState({squares: squares});
+    squares[i] = (this.state.xIsNext ? 'X' : 'O');
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext      // Flip value. Change player
+    });
   }
 
   renderSquare(i) {
@@ -62,7 +65,7 @@ class Board extends React.Component {
         // private argument 'state'
   }
   render() {
-    const status = 'Next player: X';
+    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
     return (
       <div>
