@@ -11,12 +11,30 @@ import './index.css';
 // In a react component, we pass the parameters the same way,
 // and we access them as an argument in the object called props
 // for example: this.props.href
+
+// In order to "remember things", React Components use the 'this.state'
+// as a private parameter. A constructor is used to initialize this argument
 class Square extends React.Component {
+  constructor(props) {
+      super(props);   // Needs to be called
+      this.state = {
+        value: null,  // Value of the square
+      };
+  }
+
+  // Button element, on click, it updates the state of the React component 'square'
+  // NOTE: in 'onClick', arrow syntax for defining a function is used (to be able to access
+  // the object as 'this')
   render() {    // When this component is 'rendered', it returns a 'description' of what it's shown
                 // The sintax used here is called JSX, and it will be built with Babel, and translated to code.
     return (
-      <button className="square">
-        {this.props.value} 
+      <button
+        className="square"
+        onClick ={
+          () =>  this.setState({value: 'X'})
+        }
+      >
+        {this.state.value}
       </button>
     );            // The output of this function, is a React element or a 'description'
   }
